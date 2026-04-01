@@ -14,12 +14,11 @@ public class StoreRepositoryImpl(TwonDbContext db) : IStoreRepository
         var guids = ids.Select(id => Guid.TryParse(id, out var g) ? g : Guid.Empty)
                        .Where(g => g != Guid.Empty).ToList();
 
-        return await db.Products
+        var rows = await db.Products
             .Where(p => guids.Contains(p.Id) && p.IsPublished)
             .Select(p => new { p.Id, p.PriceTHB })
-            .AsAsyncEnumerable()
-            .Select(p => (p.Id.ToString(), p.PriceTHB))
             .ToListAsync();
+        return rows.Select(p => (p.Id.ToString(), p.PriceTHB)).ToList();
     }
 
     public async Task<List<string>> FindAlreadyOwnedAsync(string userId, List<string> productIds)

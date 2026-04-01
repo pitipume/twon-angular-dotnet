@@ -1,17 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using Twon.Application.Payment.Queries.GetPendingOrders;
 using Twon.Application.Payment.Repositories;
-using Twon.Domain.Entities;
 using Twon.Domain.Enums;
 using Twon.Infrastructure.Persistence;
+using DomainEntities = Twon.Domain.Entities;
 
 namespace Twon.Infrastructure.Payment;
 
 public class PaymentRepositoryImpl(TwonDbContext db) : IPaymentRepository
 {
-    public Task<Order?> FindOrderAsync(string orderId)
+    public Task<DomainEntities.Order?> FindOrderAsync(string orderId)
     {
-        if (!Guid.TryParse(orderId, out var guid)) return Task.FromResult<Order?>(null);
+        if (!Guid.TryParse(orderId, out var guid)) return Task.FromResult<DomainEntities.Order?>(null);
         return db.Orders.Include(o => o.Payment).Include(o => o.OrderItems).FirstOrDefaultAsync(o => o.Id == guid);
     }
 
@@ -22,7 +22,7 @@ public class PaymentRepositoryImpl(TwonDbContext db) : IPaymentRepository
 
         if (order.Payment == null)
         {
-            order.Payment = new Payment
+            order.Payment = new DomainEntities.Payment
             {
                 OrderId = guid,
                 AmountTHB = order.TotalTHB,
@@ -94,7 +94,7 @@ public class PaymentRepositoryImpl(TwonDbContext db) : IPaymentRepository
             .Where(li => li.UserId == userGuid && productGuids.Contains(li.ProductId))
             .Select(li => li.ProductId).ToListAsync();
 
-        var toAdd = productGuids.Except(existing).Select(productId => new LibraryItem
+        var toAdd = productGuids.Except(existing).Select(productId => new DomainEntities.LibraryItem
         {
             UserId = userGuid,
             ProductId = productId,

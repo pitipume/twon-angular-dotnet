@@ -1,24 +1,24 @@
 using Microsoft.EntityFrameworkCore;
-using Twon.Domain.Entities;
 using Twon.Domain.Enums;
+using DomainEntities = Twon.Domain.Entities;
 
 namespace Twon.Infrastructure.Persistence;
 
 public class TwonDbContext(DbContextOptions<TwonDbContext> options) : DbContext(options)
 {
-    public DbSet<User> Users => Set<User>();
-    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
-    public DbSet<Product> Products => Set<Product>();
-    public DbSet<Order> Orders => Set<Order>();
-    public DbSet<OrderItem> OrderItems => Set<OrderItem>();
-    public DbSet<Payment> Payments => Set<Payment>();
-    public DbSet<PaymentConfig> PaymentConfigs => Set<PaymentConfig>();
-    public DbSet<LibraryItem> LibraryItems => Set<LibraryItem>();
+    public DbSet<DomainEntities.User> Users => Set<DomainEntities.User>();
+    public DbSet<DomainEntities.RefreshToken> RefreshTokens => Set<DomainEntities.RefreshToken>();
+    public DbSet<DomainEntities.Product> Products => Set<DomainEntities.Product>();
+    public DbSet<DomainEntities.Order> Orders => Set<DomainEntities.Order>();
+    public DbSet<DomainEntities.OrderItem> OrderItems => Set<DomainEntities.OrderItem>();
+    public DbSet<DomainEntities.Payment> Payments => Set<DomainEntities.Payment>();
+    public DbSet<DomainEntities.PaymentConfig> PaymentConfigs => Set<DomainEntities.PaymentConfig>();
+    public DbSet<DomainEntities.LibraryItem> LibraryItems => Set<DomainEntities.LibraryItem>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // User
-        modelBuilder.Entity<User>(e =>
+        modelBuilder.Entity<DomainEntities.User>(e =>
         {
             e.HasKey(x => x.Id);
             e.HasIndex(x => x.Email).IsUnique();
@@ -26,7 +26,7 @@ public class TwonDbContext(DbContextOptions<TwonDbContext> options) : DbContext(
         });
 
         // RefreshToken
-        modelBuilder.Entity<RefreshToken>(e =>
+        modelBuilder.Entity<DomainEntities.RefreshToken>(e =>
         {
             e.HasKey(x => x.Id);
             e.HasIndex(x => x.TokenHash).IsUnique();
@@ -35,14 +35,14 @@ public class TwonDbContext(DbContextOptions<TwonDbContext> options) : DbContext(
         });
 
         // Product
-        modelBuilder.Entity<Product>(e =>
+        modelBuilder.Entity<DomainEntities.Product>(e =>
         {
             e.HasKey(x => x.Id);
             e.Property(x => x.ProductType).HasConversion<string>();
         });
 
         // Order
-        modelBuilder.Entity<Order>(e =>
+        modelBuilder.Entity<DomainEntities.Order>(e =>
         {
             e.HasKey(x => x.Id);
             e.Property(x => x.Status).HasConversion<string>();
@@ -51,7 +51,7 @@ public class TwonDbContext(DbContextOptions<TwonDbContext> options) : DbContext(
         });
 
         // OrderItem
-        modelBuilder.Entity<OrderItem>(e =>
+        modelBuilder.Entity<DomainEntities.OrderItem>(e =>
         {
             e.HasKey(x => x.Id);
             e.HasOne(x => x.Order).WithMany(o => o.OrderItems)
@@ -61,22 +61,22 @@ public class TwonDbContext(DbContextOptions<TwonDbContext> options) : DbContext(
         });
 
         // Payment
-        modelBuilder.Entity<Payment>(e =>
+        modelBuilder.Entity<DomainEntities.Payment>(e =>
         {
             e.HasKey(x => x.Id);
             e.Property(x => x.Status).HasConversion<string>();
             e.HasOne(x => x.Order).WithOne(o => o.Payment)
-                .HasForeignKey<Payment>(x => x.OrderId).OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey<DomainEntities.Payment>(x => x.OrderId).OnDelete(DeleteBehavior.Cascade);
         });
 
         // PaymentConfig — singleton row
-        modelBuilder.Entity<PaymentConfig>(e =>
+        modelBuilder.Entity<DomainEntities.PaymentConfig>(e =>
         {
             e.HasKey(x => x.Id);
         });
 
         // LibraryItem
-        modelBuilder.Entity<LibraryItem>(e =>
+        modelBuilder.Entity<DomainEntities.LibraryItem>(e =>
         {
             e.HasKey(x => x.Id);
             e.HasOne(x => x.User).WithMany(u => u.LibraryItems)
