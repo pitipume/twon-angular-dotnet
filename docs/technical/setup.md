@@ -56,10 +56,7 @@ After signing up, copy the connection strings into step 4.
 
 **Option B — Local Docker**
 
-```bash
-# From project root (requires Docker Desktop)
-docker compose up -d
-```
+> No `docker-compose.yml` in this repo yet — use Option A (cloud) for now.
 
 ---
 
@@ -111,6 +108,8 @@ This creates all PostgreSQL tables (Users, Products, Orders, Payments, LibraryIt
 cd frontend
 npm install
 ```
+
+> **Note:** This project uses **Tailwind CSS v3** (not v4). Angular 17's build tool only supports v2/v3.
 
 ---
 
