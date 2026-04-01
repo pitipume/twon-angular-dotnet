@@ -1,0 +1,46 @@
+# ─── .NET ────────────────────────────────────────────────────────────────────
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.userprefs
+
+# EF Core migrations generated SQL (optional — keep .cs migrations, ignore SQL)
+*.Designer.cs
+
+# .NET User Secrets (stored in AppData, never in repo)
+# (already outside repo by design — listed for awareness)
+
+# Published output
+publish/
+*.publish.xml
+
+# ─── Angular ─────────────────────────────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/.angular/cache/
+
+# ─── Environment / Secrets ───────────────────────────────────────────────────
+# Never commit these
+.env
+.env.*
+appsettings.Production.json
+appsettings.Staging.json
+secrets.json
+
+# ─── OS ──────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── IDE ─────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ─── Logs ────────────────────────────────────────────────────────────────────
+*.log
+logs/
