@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Twon.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f2b8e5b9ab6979b91da80f72a53b457cc7bad1b7")]
 [assembly: System.Reflection.AssemblyProductAttribute("Twon.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Twon.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

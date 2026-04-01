@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "TZ0m3ayLtTY=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\piboon2\\Documents\\Poom\\Repositories\\twon-angular-dotnet\\backend\\Twon.Application\\Twon.Application.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\piboon2\\.nuget\\packages\\fluentvalidation\\11.12.0\\fluentvalidation.11.12.0.nupkg.sha512",
+    "C:\\Users\\piboon2\\.nuget\\packages\\mediatr\\12.5.0\\mediatr.12.5.0.nupkg.sha512",
+    "C:\\Users\\piboon2\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\piboon2\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.2\\microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
