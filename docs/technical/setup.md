@@ -46,13 +46,17 @@ git config user.email "pitipume.boonyawan@gmail.com"
 
 **Option A — Cloud (recommended, no Docker needed)**
 
-| Service | Provider | Sign up |
-|---|---|---|
-| PostgreSQL | Neon (free tier) | https://neon.tech |
-| MongoDB | Atlas M0 (free forever) | https://cloud.mongodb.com |
-| Redis | Upstash (free tier) | https://upstash.com |
+| Service | Purpose | Provider | Free tier | Sign up |
+|---|---|---|---|---|
+| PostgreSQL | Users, orders, payments | Neon | 0.5GB, 1 project | https://neon.tech |
+| MongoDB | Ebook/tarot metadata | Atlas M0 | 512MB, forever | https://cloud.mongodb.com |
+| Redis | OTP, cache, rate-limit | Upstash | 10K commands/day | https://upstash.com |
+| File storage | PDFs, card images | Cloudflare R2 | 10GB, 1M writes/month | https://dash.cloudflare.com → R2 |
+| Email | OTP delivery | Resend | 100 emails/day | https://resend.com |
 
-After signing up, copy the connection strings into step 4.
+> **R2 note:** Free tier is genuinely free but Cloudflare requires a **payment method on file** to activate R2 (you won't be charged under free limits).
+
+After signing up for all 5, copy the connection strings/keys into step 4.
 
 **Option B — Local Docker**
 
@@ -62,29 +66,42 @@ After signing up, copy the connection strings into step 4.
 
 ## 4. Configure environment
 
+Where to get each value:
+
+| Secret | Where to get it |
+|---|---|
+| `JWT_SECRET` | Generate yourself — run: `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` |
+| `ConnectionStrings:Postgres` | Neon dashboard → your project → Connection string |
+| `MongoDB:ConnectionString` | Atlas → your cluster → Connect → Drivers → copy URI |
+| `Redis:ConnectionString` | Upstash → your database → REST API → copy `UPSTASH_REDIS_URL` |
+| `R2:AccountUrl` | Cloudflare → R2 → Overview → Account ID → `https://<id>.r2.cloudflarestorage.com` |
+| `R2:AccessKeyId` / `SecretAccessKey` | Cloudflare → R2 → Manage API tokens → Create token |
+| `Resend:ApiKey` | Resend → API Keys → Create API key |
+
 ```bash
 cd backend/Twon.API
 
 dotnet user-secrets init
 
-# Required
-dotnet user-secrets set "JWT_SECRET" "generate-a-32-char-random-string-here"
+# Generate JWT_SECRET first:
+# node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+dotnet user-secrets set "JWT_SECRET" "paste-generated-secret-here"
 
-# PostgreSQL (Neon example)
+# PostgreSQL (Neon — copy from dashboard)
 dotnet user-secrets set "ConnectionStrings:Postgres" "Host=ep-xxx.neon.tech;Database=twon;Username=twon_owner;Password=xxx;Ssl Mode=Require"
 
-# MongoDB (Atlas example)
+# MongoDB (Atlas — copy from dashboard)
 dotnet user-secrets set "MongoDB:ConnectionString" "mongodb+srv://user:pass@cluster0.xxxxx.mongodb.net"
 
-# Redis (Upstash example)
+# Redis (Upstash — copy from dashboard)
 dotnet user-secrets set "Redis:ConnectionString" "rediss://default:xxx@xxx.upstash.io:6380"
 
-# Cloudflare R2 (get from R2 dashboard → Manage API tokens)
+# Cloudflare R2 (R2 dashboard → Manage API tokens)
 dotnet user-secrets set "R2:AccountUrl" "https://<account-id>.r2.cloudflarestorage.com"
 dotnet user-secrets set "R2:AccessKeyId" "your-access-key-id"
 dotnet user-secrets set "R2:SecretAccessKey" "your-secret-access-key"
 
-# Resend (get from resend.com → API Keys)
+# Resend (resend.com → API Keys)
 dotnet user-secrets set "Resend:ApiKey" "re_your-key"
 ```
 
@@ -156,4 +173,4 @@ cd backend && dotnet ef database update --project Twon.Infrastructure --startup-
 3. Go to **Manage API tokens** → Create token with **Object Read & Write** on your bucket
 4. Copy Account ID, Access Key ID, Secret Access Key → paste into user-secrets above
 
-R2 is free up to 10GB storage + 1M writes/month — no credit card needed.
+R2 is free up to 10GB storage + 1M writes/month. A payment method is required to activate R2 on your Cloudflare account, but you won't be charged unless you exceed the free limits.
