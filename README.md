@@ -4,14 +4,15 @@ Dual-commerce platform: **Ebook Shop** + **E-Tarot Card Shop**
 
 ---
 
-## Repos
+## Docs Structure
 
-| Repo | Purpose |
+| Folder | Purpose |
 |---|---|
-| `twon-angular-dotnet` | This repo — Angular frontend + ASP.NET Core backend |
-| `twon-docs` | Business rules, data models, API contracts |
-
-Read `twon-docs` first if you need context on what the platform does.
+| [`docs/business/`](docs/business/) | Product overview, business rules, user roles |
+| [`docs/data-models/`](docs/data-models/) | User, product, order, library schemas |
+| [`docs/api-contracts/`](docs/api-contracts/) | Auth, catalog, store, payment, library, admin |
+| [`docs/infrastructure/`](docs/infrastructure/) | Cloud services, storage |
+| [`docs/technical/`](docs/technical/) | Setup, commands, deployment |
 
 ---
 

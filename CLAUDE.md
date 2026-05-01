@@ -1,7 +1,7 @@
 # CLAUDE.md — Twon Platform (Angular + C# .NET)
 
-> **Read `twon-docs` first** for business rules, data models, and API contracts.
-> `twon-docs` repo: `C:\...\twon-docs` (local) or `github.com/pitipume/twon-docs`
+> **Read `docs/` first** for business rules, data models, and API contracts.
+> [`docs/business/`](docs/business/) · [`docs/data-models/`](docs/data-models/) · [`docs/api-contracts/`](docs/api-contracts/)
 >
 > This file covers only tech-stack decisions for this repo.
 
@@ -100,4 +100,5 @@ public class BaseResult<T>
 - `Write` only for brand new files
 - Follow the layer pattern above — never put business logic in controllers
 - MediatR = the CQRS bus, same concept as NestJS CommandBus/QueryBus
-- When in doubt about business rules → check `twon-docs`
+- When in doubt about business rules → check `docs/`
+- **Keep docs in sync with code** — whenever you add/change/remove an endpoint, entity field, enum value, or config key, update the relevant doc in `docs/` in the same response. Docs are the source of truth for future AI sessions.
